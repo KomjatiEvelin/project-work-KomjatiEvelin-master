@@ -1,9 +1,8 @@
 package hu.uni.eku.tzs.service.exceptions;
 
-public class ProductAlreadyExistsException extends Exception{
+public class ProductAlreadyExistsException extends Exception {
 
-    public ProductAlreadyExistsException() {
-    }
+    public ProductAlreadyExistsException() {}
 
     public ProductAlreadyExistsException(String message) {
         super(message);

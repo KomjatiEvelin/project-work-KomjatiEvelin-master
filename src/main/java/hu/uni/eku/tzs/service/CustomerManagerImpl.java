@@ -43,10 +43,10 @@ public class CustomerManagerImpl implements CustomerManager {
     }
 
     @Override
-    public Customer readByID(int ID) throws CustomerNotFoundException {
-        Optional<CustomerEntity> entity = customerRepository.findById(ID);
+    public Customer readById(int id) throws CustomerNotFoundException {
+        Optional<CustomerEntity> entity = customerRepository.findById(id);
         if (entity.isEmpty()) {
-            throw new CustomerNotFoundException(String.format("Cannot find customer with ID %s", ID));
+            throw new CustomerNotFoundException(String.format("Cannot find customer with ID %s", id));
         }
 
         return convertCustomerEntity2Model(entity.get());

@@ -9,7 +9,7 @@ import java.util.Collection;
 public interface SalesManager {
     Collection<Sale> readAll();
 
-    Collection<Sale> readByID(int id);
+    Collection<Sale> readById(int id);
 
     Sale record(Sale sale) throws SaleAlreadyExistsException;
 

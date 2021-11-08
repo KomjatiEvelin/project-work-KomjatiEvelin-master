@@ -6,14 +6,15 @@ import hu.uni.eku.tzs.service.exceptions.SaleNotFoundException;
 
 import java.util.Collection;
 
-public class SalesManagerImpl implements SalesManager{
+public class SalesManagerImpl implements SalesManager {
+
     @Override
     public Collection<Sale> readAll() {
         return null;
     }
 
     @Override
-    public Collection<Sale> readByID(int id) {
+    public Collection<Sale> readById(int id) {
         return null;
     }
 

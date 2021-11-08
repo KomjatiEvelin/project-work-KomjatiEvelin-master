@@ -1,8 +1,7 @@
 package hu.uni.eku.tzs.service.exceptions;
 
-public class SaleAlreadyExistsException extends Exception{
-    public SaleAlreadyExistsException() {
-    }
+public class SaleAlreadyExistsException extends Exception {
+    public SaleAlreadyExistsException() {}
 
     public SaleAlreadyExistsException(String message) {
         super(message);

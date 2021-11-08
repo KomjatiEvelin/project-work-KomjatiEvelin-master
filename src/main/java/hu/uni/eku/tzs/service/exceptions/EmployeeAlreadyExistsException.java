@@ -2,8 +2,7 @@ package hu.uni.eku.tzs.service.exceptions;
 
 public class EmployeeAlreadyExistsException extends Exception {
 
-    public EmployeeAlreadyExistsException() {
-    }
+    public EmployeeAlreadyExistsException() {}
 
     public EmployeeAlreadyExistsException(String message) {
         super(message);

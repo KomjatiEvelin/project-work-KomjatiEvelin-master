@@ -10,7 +10,7 @@ public interface EmployeeManager {
 
     Collection<Employee> readAll();
 
-    Employee readByID(int ID) throws EmployeeNotFoundException;
+    Employee readById(int id) throws EmployeeNotFoundException;
 
     Employee record(Employee employee) throws EmployeeAlreadyExistsException;
 

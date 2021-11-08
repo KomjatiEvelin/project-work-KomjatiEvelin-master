@@ -6,14 +6,15 @@ import hu.uni.eku.tzs.service.exceptions.ProductNotFoundException;
 
 import java.util.Collection;
 
-public class ProductManagerImpl implements ProductManager{
+public class ProductManagerImpl implements ProductManager {
+
     @Override
     public Collection<Product> readAll() {
         return null;
     }
 
     @Override
-    public Product readByID(int ID) throws ProductNotFoundException {
+    public Product readById(int id) throws ProductNotFoundException {
         return null;
     }
 

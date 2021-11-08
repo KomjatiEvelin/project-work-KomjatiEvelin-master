@@ -10,7 +10,7 @@ public interface ProductManager {
 
     Collection<Product> readAll();
 
-    Product readByID(int ID) throws ProductNotFoundException;
+    Product readById(int id) throws ProductNotFoundException;
 
     Product record(Product product) throws ProductAlreadyExistsException;
 

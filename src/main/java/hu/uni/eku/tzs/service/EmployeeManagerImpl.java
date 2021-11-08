@@ -44,10 +44,10 @@ public class EmployeeManagerImpl implements EmployeeManager {
     }
 
     @Override
-    public Employee readByID(int ID) throws EmployeeNotFoundException {
-        Optional<EmployeeEntity> entity = employeeRepository.findById(ID);
+    public Employee readById(int id) throws EmployeeNotFoundException {
+        Optional<EmployeeEntity> entity = employeeRepository.findById(id);
         if (entity.isEmpty()) {
-            throw new EmployeeNotFoundException(String.format("Cannot find employee with ID %s", ID));
+            throw new EmployeeNotFoundException(String.format("Cannot find employee with ID %s", id));
         }
 
         return convertEmployeeEntity2Model(entity.get());
@@ -79,7 +79,6 @@ public class EmployeeManagerImpl implements EmployeeManager {
         return convertEmployeeEntity2Model(employeeRepository.save(entity));
 
     }
-
 
     @Override
     public void delete(Employee employee) {

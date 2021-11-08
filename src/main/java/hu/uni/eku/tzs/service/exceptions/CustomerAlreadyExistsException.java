@@ -2,8 +2,7 @@ package hu.uni.eku.tzs.service.exceptions;
 
 public class CustomerAlreadyExistsException extends Exception {
 
-    public CustomerAlreadyExistsException() {
-    }
+    public CustomerAlreadyExistsException() {}
 
     public CustomerAlreadyExistsException(String message) {
         super(message);
