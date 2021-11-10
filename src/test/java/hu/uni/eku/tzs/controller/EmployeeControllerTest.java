@@ -47,7 +47,6 @@ class EmployeeControllerTest {
         //then
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
 
-
     }
 
     @Test

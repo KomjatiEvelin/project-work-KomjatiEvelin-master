@@ -41,8 +41,8 @@ public class ProductController {
     public ProductDto create(@Valid @RequestBody ProductDto recordRequestDto) {
         Product product = productMapper.productDto2product(recordRequestDto);
         try {
-            Product reordedProduct = productManager.record(product);
-            return productMapper.product2productDto(reordedProduct);
+            Product recordedProduct = productManager.record(product);
+            return productMapper.product2productDto(recordedProduct);
         } catch (ProductAlreadyExistsException e){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,e.getMessage());
         }
