@@ -76,7 +76,7 @@ public class SaleManagerImplTest {
     }
 
     @Test
-    void readAllHappyPath(){
+    void readAllHappyPath() {
         //given
         List<SaleEntity> saleEntities=List.of(
                 TestDataProvider.getTestSaleEntity1(),
