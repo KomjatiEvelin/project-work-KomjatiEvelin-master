@@ -42,22 +42,8 @@ class EmployeeManagerImplTest {
         Employee actual = service.record(testEmployee);
         // then
         assertThat(actual).usingRecursiveComparison().isEqualTo(testEmployee);
-//        assertThat(actual).isEqualToComparingFieldByFieldRecursively(hg2g);
     }
 
-    @Test
-    void recordEmployeeUnknownAuthor() throws EmployeeAlreadyExistsException {
-        // given
-        Employee testEmployee = TestDataProvider.getJaneDoe();
-        EmployeeEntity testEmployeeEntity = TestDataProvider.getJaneDoeEntity();
-        when(employeeRepository.findById(TestDataProvider.JANE_DOE_ID)).thenReturn(Optional.empty());
-        when(employeeRepository.save(testEmployeeEntity)).thenReturn(testEmployeeEntity);
-        // when
-        Employee actual = service.record(testEmployee);
-        // then
-        assertThat(actual).usingRecursiveComparison()
-            .isEqualTo(testEmployee);
-    }
 
     @Test
     void recordEmployeeAlreadyExistsException() {
@@ -90,23 +76,23 @@ class EmployeeManagerImplTest {
     }
 
     @Test
-    void readAllHappyPath() {
-        // given
-        List<EmployeeEntity> employeeEntities = List.of(
-            TestDataProvider.getJaneDoeEntity(),
-            TestDataProvider.getJohnDoeEntity()
-        );
-        Collection<Employee> expectedEmployees = List.of(
-            TestDataProvider.getJaneDoe(),
-            TestDataProvider.getJohnDoe()
-        );
-        when(employeeRepository.findAll()).thenReturn(employeeEntities);
-        // when
-        Collection<Employee> actualEmployees = service.readAll();
-        // then
-        assertThat(actualEmployees)
-            .usingRecursiveComparison()
-            .isEqualTo(expectedEmployees);
+        void readAllHappyPath() {
+            // given
+            List<EmployeeEntity> employeeEntities = List.of(
+                    TestDataProvider.getJaneDoeEntity(),
+                    TestDataProvider.getJohnDoeEntity()
+            );
+            Collection<Employee> expectedEmployees = List.of(
+                    TestDataProvider.getJaneDoe(),
+                    TestDataProvider.getJohnDoe()
+            );
+            when(employeeRepository.findAll()).thenReturn(employeeEntities);
+            // when
+            Collection<Employee> actualEmployees = service.readAll();
+            // then
+            assertThat(actualEmployees)
+                    .usingRecursiveComparison()
+                    .isEqualTo(expectedEmployees);
 //            .containsExactlyInAnyOrderElementsOf(expectedEmployees);
     }
 
