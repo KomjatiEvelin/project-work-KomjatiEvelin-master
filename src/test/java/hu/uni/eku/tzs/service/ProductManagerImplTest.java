@@ -47,8 +47,8 @@ public class ProductManagerImplTest {
     void recordProductAlreadyExistsException() {
         //given
         Product testProd=TestDataProvider.getTestProd1();
-        ProductEntity testPRodEntity=TestDataProvider.getTestProd1Entity();
-        when(productRepository.findById(TestDataProvider.PROD1_ID)).thenReturn(Optional.ofNullable(testPRodEntity));
+        ProductEntity testProdEntity=TestDataProvider.getTestProd1Entity();
+        when(productRepository.findById(TestDataProvider.PROD1_ID)).thenReturn(Optional.ofNullable(testProdEntity));
         //when
         assertThatThrownBy(()->service.record(testProd)).isInstanceOf(ProductAlreadyExistsException.class);
     }

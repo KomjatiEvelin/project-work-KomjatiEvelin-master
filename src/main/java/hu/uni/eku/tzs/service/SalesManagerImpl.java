@@ -8,7 +8,6 @@ import hu.uni.eku.tzs.service.exceptions.SaleNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
