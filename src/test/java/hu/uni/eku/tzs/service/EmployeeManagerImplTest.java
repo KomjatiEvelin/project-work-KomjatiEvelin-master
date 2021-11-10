@@ -49,8 +49,8 @@ class EmployeeManagerImplTest {
     void recordEmployeeAlreadyExistsException() {
         // given
         Employee testEmployee = TestDataProvider.getJohnDoe();
-        EmployeeEntity hg2gEntity = TestDataProvider.getJohnDoeEntity();
-        when(employeeRepository.findById(TestDataProvider.JOHN_DOE_ID)).thenReturn(Optional.ofNullable(hg2gEntity));
+        EmployeeEntity testEmployeeEntity = TestDataProvider.getJohnDoeEntity();
+        when(employeeRepository.findById(TestDataProvider.JOHN_DOE_ID)).thenReturn(Optional.ofNullable(testEmployeeEntity));
         // when
         assertThatThrownBy(() -> service.record(testEmployee)).isInstanceOf(EmployeeAlreadyExistsException.class);
     }
@@ -76,7 +76,7 @@ class EmployeeManagerImplTest {
     }
 
     @Test
-        void readAllHappyPath() {
+    void readAllHappyPath() {
             // given
             List<EmployeeEntity> employeeEntities = List.of(
                     TestDataProvider.getJaneDoeEntity(),

@@ -33,6 +33,7 @@ public class ProductManagerImpl implements ProductManager {
                 .price(product.getPrice())
                 .build();
     }
+
     @Override
     public Collection<Product> readAll() {
         return productRepository.findAll().stream().map(ProductManagerImpl::convertProductEntity2Model)
@@ -41,8 +42,8 @@ public class ProductManagerImpl implements ProductManager {
 
     @Override
     public Product readById(int id) throws ProductNotFoundException {
-        Optional<ProductEntity> entity=productRepository.findById(id);
-        if(entity.isEmpty()){
+        Optional<ProductEntity> entity = productRepository.findById(id);
+        if (entity.isEmpty()) {
             throw new ProductNotFoundException(String.format("Cannot find product with ID %s", id));
         }
         return convertProductEntity2Model(entity.get());
@@ -50,11 +51,11 @@ public class ProductManagerImpl implements ProductManager {
 
     @Override
     public Product record(Product product) throws ProductAlreadyExistsException {
-        if(productRepository.findById(product.getId()).isPresent()){
+        if (productRepository.findById(product.getId()).isPresent()) {
             throw new ProductAlreadyExistsException();
         }
 
-        ProductEntity productEntity=productRepository.save(
+        ProductEntity productEntity = productRepository.save(
                 ProductEntity.builder()
                         .id(product.getId())
                         .name(product.getName())
@@ -66,9 +67,9 @@ public class ProductManagerImpl implements ProductManager {
 
     @Override
     public Product modify(Product product) throws ProductNotFoundException {
-        ProductEntity productEntity=convertProductModel2Entity(product);
-        if(productRepository.findById(product.getId()).isEmpty()){
-            throw new ProductNotFoundException(String.format("Cannot find product with ID %s", product.getId()));
+        ProductEntity productEntity = convertProductModel2Entity(product);
+        if (productRepository.findById(product.getId()).isEmpty()) {
+            throw new ProductNotFoundException("Cannot find this product");
         }
 
         return convertProductEntity2Model(productRepository.save(productEntity));
