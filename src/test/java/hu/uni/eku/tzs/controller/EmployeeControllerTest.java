@@ -65,7 +65,7 @@ class EmployeeControllerTest {
     }
 
     @Test
-    void createEmployeeThrowsBookAlreadyExistsException() throws EmployeeAlreadyExistsException {
+    void createEmployeeThrowsEmployeeAlreadyExistsException() throws EmployeeAlreadyExistsException {
         // given
         Employee testEmployee = TestDataProvider.getJohnDoe();
         EmployeeDto testEmployeeDto = TestDataProvider.getJohnDoeDto();
