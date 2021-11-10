@@ -19,9 +19,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -87,7 +85,7 @@ class EmployeeControllerTest {
         EmployeeDto response = controller.update(requestDto);
         // then
         assertThat(response).usingRecursiveComparison()
-            .isEqualTo(expected);
+                .isEqualTo(expected);
     }
 
 
@@ -110,7 +108,7 @@ class EmployeeControllerTest {
 
         // when then
         assertThatThrownBy(() -> controller.delete(notFoundEmployeeId))
-            .isInstanceOf(ResponseStatusException.class);
+                .isInstanceOf(ResponseStatusException.class);
     }
 
     private static class TestDataProvider {
@@ -119,7 +117,7 @@ class EmployeeControllerTest {
 
 
         public static Employee getJohnDoe() {
-            return new Employee(ID,"John","J","Doe");
+            return new Employee(ID, "John", "J", "Doe");
         }
 
         public static EmployeeDto getJohnDoeDto() {

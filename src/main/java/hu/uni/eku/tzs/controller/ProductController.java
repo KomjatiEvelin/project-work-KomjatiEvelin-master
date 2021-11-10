@@ -10,7 +10,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
@@ -28,8 +35,8 @@ public class ProductController {
     private final ProductMapper productMapper;
 
     @ApiOperation("Read All")
-    @GetMapping(value = {"/",""})
-    public Collection<ProductDto> readAllProducts(){
+    @GetMapping(value = {"/", ""})
+    public Collection<ProductDto> readAllProducts() {
         return productManager.readAll()
                 .stream()
                 .map(productMapper::product2productDto)
@@ -37,42 +44,42 @@ public class ProductController {
     }
 
     @ApiOperation("Record")
-    @PostMapping(value = {"","/"})
+    @PostMapping(value = {"", "/"})
     public ProductDto create(@Valid @RequestBody ProductDto recordRequestDto) {
         Product product = productMapper.productDto2product(recordRequestDto);
         try {
             Product recordedProduct = productManager.record(product);
             return productMapper.product2productDto(recordedProduct);
-        } catch (ProductAlreadyExistsException e){
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,e.getMessage());
+        } catch (ProductAlreadyExistsException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
 
     @ApiOperation("Update")
-    @PostMapping(value = {"","/"})
+    @PostMapping(value = {"", "/"})
     public ProductDto update(@Valid @RequestBody ProductDto updateRequestDto) {
-        Product product= productMapper.productDto2product(updateRequestDto);
+        Product product = productMapper.productDto2product(updateRequestDto);
         try {
-            Product updatedProduct=productManager.modify(product);
+            Product updatedProduct = productManager.modify(product);
             return productMapper.product2productDto(updatedProduct);
-        } catch (ProductNotFoundException e){
+        } catch (ProductNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
 
     @ApiOperation("Delete")
-    @DeleteMapping(value = {"","/"})
+    @DeleteMapping(value = {"", "/"})
     public void delete(@RequestParam int id) {
         try {
             productManager.delete(productManager.readById(id));
-        } catch (ProductNotFoundException e){
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,e.getMessage());
+        } catch (ProductNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
 
     @ApiOperation("Delete")
     @DeleteMapping(value = {"/{id}"})
-    public void deleteBasedOnPath(@PathVariable int id){
+    public void deleteBasedOnPath(@PathVariable int id) {
         this.delete(id);
     }
 }
