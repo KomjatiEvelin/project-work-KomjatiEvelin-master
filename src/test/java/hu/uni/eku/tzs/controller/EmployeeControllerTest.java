@@ -19,7 +19,10 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doThrow;
+
 
 @ExtendWith(MockitoExtension.class)
 class EmployeeControllerTest {
@@ -62,7 +65,7 @@ class EmployeeControllerTest {
     }
 
     @Test
-    void createBookThrowsBookAlreadyExistsException() throws EmployeeAlreadyExistsException {
+    void createEmployeeThrowsBookAlreadyExistsException() throws EmployeeAlreadyExistsException {
         // given
         Employee testEmployee = TestDataProvider.getJohnDoe();
         EmployeeDto testEmployeeDto = TestDataProvider.getJohnDoeDto();
