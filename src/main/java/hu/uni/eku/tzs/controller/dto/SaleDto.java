@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
@@ -13,16 +13,18 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class SaleDto {
 
+    @NotNull
     private int salesId;
 
-    @NotBlank(message = "Employee id cannot be empty")
+    @NotNull
     private int salesPersonId;
 
-    @NotBlank(message = "Customer id cannot be empty")
+    @NotNull
     private int customerId;
 
-    @NotBlank(message = "Product id cannot be empty")
+    @NotNull
     private int productId;
 
+    @NotNull
     private int quantity;
 }

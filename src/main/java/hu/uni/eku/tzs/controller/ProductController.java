@@ -55,7 +55,7 @@ public class ProductController {
         }
     }
 
-    @ApiOperation("Update")
+    /*@ApiOperation("Update")
     @PostMapping(value = {"", "/"})
     public ProductDto update(@Valid @RequestBody ProductDto updateRequestDto) {
         Product product = productMapper.productDto2product(updateRequestDto);
@@ -65,7 +65,7 @@ public class ProductController {
         } catch (ProductNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
-    }
+    }*/
 
     @ApiOperation("Delete")
     @DeleteMapping(value = {"", "/"})
