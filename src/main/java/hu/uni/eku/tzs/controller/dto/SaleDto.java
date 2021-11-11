@@ -24,6 +24,5 @@ public class SaleDto {
     @NotBlank(message = "Product id cannot be empty")
     private int productId;
 
-    @NotBlank(message = "Quantity cannot be empty")
     private int quantity;
 }

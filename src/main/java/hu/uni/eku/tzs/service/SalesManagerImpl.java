@@ -1,10 +1,16 @@
 package hu.uni.eku.tzs.service;
 
+import hu.uni.eku.tzs.dao.CustomerRepository;
+import hu.uni.eku.tzs.dao.EmployeeRepository;
+import hu.uni.eku.tzs.dao.ProductRepository;
 import hu.uni.eku.tzs.dao.SaleRepository;
 import hu.uni.eku.tzs.dao.entity.SaleEntity;
 import hu.uni.eku.tzs.model.Sale;
-import hu.uni.eku.tzs.service.exceptions.SaleAlreadyExistsException;
 import hu.uni.eku.tzs.service.exceptions.SaleNotFoundException;
+import hu.uni.eku.tzs.service.exceptions.SaleAlreadyExistsException;
+import hu.uni.eku.tzs.service.exceptions.ProductNotFoundException;
+import hu.uni.eku.tzs.service.exceptions.CustomerNotFoundException;
+import hu.uni.eku.tzs.service.exceptions.EmployeeNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +23,12 @@ import java.util.stream.Collectors;
 public class SalesManagerImpl implements SalesManager {
 
     private  final SaleRepository saleRepository;
+
+    private final CustomerRepository customerRepository;
+
+    private  final ProductRepository productRepository;
+
+    private  final EmployeeRepository employeeRepository;
 
     private static Sale convertSaleEntity2Model(SaleEntity saleEntity) {
         return new Sale(
@@ -54,9 +66,22 @@ public class SalesManagerImpl implements SalesManager {
     }
 
     @Override
-    public Sale record(Sale sale) throws SaleAlreadyExistsException {
+    public Sale record(Sale sale) throws SaleAlreadyExistsException, EmployeeNotFoundException,
+            CustomerNotFoundException, ProductNotFoundException {
         if (saleRepository.findById(sale.getSalesId()).isPresent()) {
             throw new SaleAlreadyExistsException();
+        }
+
+        if (employeeRepository.findById(sale.getSalesPersonId()).isEmpty()) {
+            throw new EmployeeNotFoundException();
+        }
+
+        if (customerRepository.findById(sale.getCustomerId()).isEmpty()) {
+            throw new CustomerNotFoundException();
+        }
+
+        if (productRepository.findById(sale.getProductId()).isEmpty()) {
+            throw new ProductNotFoundException();
         }
 
         SaleEntity saleEntity = saleRepository.save(

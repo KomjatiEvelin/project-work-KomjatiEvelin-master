@@ -2,8 +2,13 @@ package hu.uni.eku.tzs.controller;
 
 import hu.uni.eku.tzs.controller.dto.SaleDto;
 import hu.uni.eku.tzs.controller.dto.SaleMapper;
+import hu.uni.eku.tzs.model.Sale;
 import hu.uni.eku.tzs.service.SalesManager;
 import hu.uni.eku.tzs.service.exceptions.SaleNotFoundException;
+import hu.uni.eku.tzs.service.exceptions.SaleAlreadyExistsException;
+import hu.uni.eku.tzs.service.exceptions.ProductNotFoundException;
+import hu.uni.eku.tzs.service.exceptions.CustomerNotFoundException;
+import hu.uni.eku.tzs.service.exceptions.EmployeeNotFoundException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +44,19 @@ public class SaleController {
                 .stream()
                 .map(saleMapper::sale2saleDto)
                 .collect(Collectors.toList());
+    }
+
+    @ApiOperation("Record")
+    @PostMapping(value = {"", "/"})
+    public SaleDto create(@Valid @RequestBody SaleDto recordRequestDto) {
+        Sale product = saleMapper.saleDto2sale(recordRequestDto);
+        try {
+            Sale recordedSale = salesManager.record(product);
+            return saleMapper.sale2saleDto(recordedSale);
+        } catch (SaleAlreadyExistsException | EmployeeNotFoundException
+                | CustomerNotFoundException | ProductNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
     }
 
     @ApiOperation("Delete")

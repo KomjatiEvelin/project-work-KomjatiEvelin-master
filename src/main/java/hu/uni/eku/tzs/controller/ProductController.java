@@ -35,7 +35,7 @@ public class ProductController {
     private final ProductMapper productMapper;
 
     @ApiOperation("Read All")
-    @GetMapping(value = {"/", ""})
+    @GetMapping(value = {"", "/"})
     public Collection<ProductDto> readAllProducts() {
         return productManager.readAll()
                 .stream()

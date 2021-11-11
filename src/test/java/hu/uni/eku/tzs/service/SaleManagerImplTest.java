@@ -6,8 +6,7 @@ import hu.uni.eku.tzs.model.Customer;
 import hu.uni.eku.tzs.model.Employee;
 import hu.uni.eku.tzs.model.Product;
 import hu.uni.eku.tzs.model.Sale;
-import hu.uni.eku.tzs.service.exceptions.SaleAlreadyExistsException;
-import hu.uni.eku.tzs.service.exceptions.SaleNotFoundException;
+import hu.uni.eku.tzs.service.exceptions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -32,8 +31,9 @@ public class SaleManagerImplTest {
     @InjectMocks
     SalesManagerImpl service;
 
+    //TODO: megszerelni
     @Test
-    void recordSaleHAppyPath() throws SaleAlreadyExistsException {
+    void recordSaleHappyPath() throws SaleAlreadyExistsException, CustomerNotFoundException, ProductNotFoundException, EmployeeNotFoundException {
         //given
         Sale testSale = TestDataProvider.getTestSale1();
         SaleEntity testSaleEntity=TestDataProvider.getTestSaleEntity1();
