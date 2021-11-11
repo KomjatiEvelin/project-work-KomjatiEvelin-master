@@ -63,3 +63,4 @@ fabric.properties
 *.versionsBackup
 
 .env
+/src/main/resources/SalesDB.sql
