@@ -1,16 +1,13 @@
 package hu.uni.eku.tzs.service;
 
-import hu.uni.eku.tzs.controller.dto.CustomerMapper;
-import hu.uni.eku.tzs.dao.CustomerRepository;
-import hu.uni.eku.tzs.dao.EmployeeRepository;
-import hu.uni.eku.tzs.dao.ProductRepository;
 import hu.uni.eku.tzs.dao.SaleRepository;
 import hu.uni.eku.tzs.dao.entity.SaleEntity;
 import hu.uni.eku.tzs.model.Customer;
 import hu.uni.eku.tzs.model.Employee;
 import hu.uni.eku.tzs.model.Product;
 import hu.uni.eku.tzs.model.Sale;
-import hu.uni.eku.tzs.service.exceptions.*;
+import hu.uni.eku.tzs.service.exceptions.SaleNotFoundException;
+import hu.uni.eku.tzs.service.exceptions.SaleAlreadyExistsException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,7 +20,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -31,9 +27,6 @@ public class SaleManagerImplTest {
 
     @Mock
     SaleRepository saleRepository;
-
-    @Mock
-    CustomerRepository customerRepository;
 
     @InjectMocks
     SalesManagerImpl service;
@@ -61,6 +54,20 @@ public class SaleManagerImplTest {
         //when
         assertThatThrownBy(()->service.record(testSale)).isInstanceOf(SaleAlreadyExistsException.class);
     }
+
+    /*@Test
+    void modifyEmployeeHappyPath() throws SaleNotFoundException, CustomerNotFoundException,
+            ProductNotFoundException, EmployeeNotFoundException {
+        // given
+        Sale testSale = TestDataProvider.getTestSale1();
+        SaleEntity testSaleEntity = TestDataProvider.getTestSaleEntity1();
+        when(saleRepository.findById(testSale.getSalesId())).thenReturn(Optional.of(testSaleEntity));
+        when(saleRepository.save(any())).thenReturn(testSaleEntity);
+        // when
+        Sale actual = service.modify(testSale);
+        // then
+        assertThat(actual).usingRecursiveComparison().isEqualTo(testSale);
+    }*/
 
     @Test
     void readByIdHappyPath() throws SaleNotFoundException {

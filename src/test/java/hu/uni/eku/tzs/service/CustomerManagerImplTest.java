@@ -54,6 +54,19 @@ public class CustomerManagerImplTest {
     }
 
     @Test
+    void modifyCustomerHappyPath() throws CustomerNotFoundException {
+        // given
+        Customer testCustomer = TestDataProvider.getJohnDoe();
+        CustomerEntity testCustomerEntity = TestDataProvider.getJohnDoeEntity();
+        when(customerRepository.findById(testCustomer.getId())).thenReturn(Optional.of(testCustomerEntity));
+        when(customerRepository.save(any())).thenReturn(testCustomerEntity);
+        // when
+        Customer actual = service.modify(testCustomer);
+        // then
+        assertThat(actual).usingRecursiveComparison().isEqualTo(testCustomer);
+    }
+
+    @Test
     void readByIdHappyPath() throws CustomerNotFoundException {
         // given
         when(customerRepository.findById(TestDataProvider.JOHN_DOE_ID))

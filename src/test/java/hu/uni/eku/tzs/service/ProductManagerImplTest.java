@@ -66,6 +66,19 @@ public class ProductManagerImplTest {
     }
 
     @Test
+    void modifyProductHappyPath() throws ProductNotFoundException {
+        // given
+        Product testProd = TestDataProvider.getTestProd1();
+        ProductEntity testProdEntity = TestDataProvider.getTestProd1Entity();
+        when(productRepository.findById(testProd.getId())).thenReturn(Optional.of(testProdEntity));
+        when(productRepository.save(any())).thenReturn(testProdEntity);
+        // when
+        Product actual = service.modify(testProd);
+        // then
+        assertThat(actual).usingRecursiveComparison().isEqualTo(testProd);
+    }
+
+    @Test
     void readByIdProductNotFoundException() {
         //given
         when(productRepository.findById(TestDataProvider.UNKNOWN_ID)).thenReturn(Optional.empty());

@@ -33,7 +33,6 @@ class EmployeeManagerImplTest {
     @Test
     void recordEmployeeHappyPath() throws EmployeeAlreadyExistsException {
         // given
-
         Employee testEmployee = TestDataProvider.getJohnDoe();
         EmployeeEntity testEmployeeEntity = TestDataProvider.getJohnDoeEntity();
         when(employeeRepository.findById(any())).thenReturn(Optional.empty());
@@ -41,6 +40,19 @@ class EmployeeManagerImplTest {
         when(employeeRepository.save(any())).thenReturn(testEmployeeEntity);
         // when
         Employee actual = service.record(testEmployee);
+        // then
+        assertThat(actual).usingRecursiveComparison().isEqualTo(testEmployee);
+    }
+
+    @Test
+    void modifyEmployeeHappyPath() throws EmployeeNotFoundException {
+        // given
+        Employee testEmployee = TestDataProvider.getJohnDoe();
+        EmployeeEntity testEmployeeEntity = TestDataProvider.getJohnDoeEntity();
+        when(employeeRepository.findById(testEmployee.getId())).thenReturn(Optional.of(testEmployeeEntity));
+        when(employeeRepository.save(any())).thenReturn(testEmployeeEntity);
+        // when
+        Employee actual = service.modify(testEmployee);
         // then
         assertThat(actual).usingRecursiveComparison().isEqualTo(testEmployee);
     }
