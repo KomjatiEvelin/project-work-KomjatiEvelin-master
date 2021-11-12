@@ -62,3 +62,4 @@ crashlytics-build.properties
 fabric.properties
 *.versionsBackup
 
+/src/main/resources/SalesDB.sql
