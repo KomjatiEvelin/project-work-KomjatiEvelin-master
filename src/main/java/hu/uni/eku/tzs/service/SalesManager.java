@@ -17,7 +17,8 @@ public interface SalesManager {
     Sale record(Sale sale) throws SaleAlreadyExistsException,
             EmployeeNotFoundException, CustomerNotFoundException, ProductNotFoundException;
 
-    Sale modify(Sale sale) throws SaleNotFoundException, EmployeeNotFoundException, CustomerNotFoundException, ProductNotFoundException;
+    Sale modify(Sale sale) throws SaleNotFoundException, EmployeeNotFoundException,
+            CustomerNotFoundException, ProductNotFoundException;
 
     void delete(Sale sale) throws SaleNotFoundException;
 }

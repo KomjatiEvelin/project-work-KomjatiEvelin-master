@@ -72,7 +72,7 @@ public class SalesManagerImpl implements SalesManager {
             throw new SaleAlreadyExistsException();
         }
 
-       checkDependencies(sale);
+        checkDependencies(sale);
 
         SaleEntity saleEntity = saleRepository.save(
                 SaleEntity.builder()

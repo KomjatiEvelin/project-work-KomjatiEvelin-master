@@ -1,5 +1,9 @@
 package hu.uni.eku.tzs.service;
 
+import hu.uni.eku.tzs.controller.dto.CustomerMapper;
+import hu.uni.eku.tzs.dao.CustomerRepository;
+import hu.uni.eku.tzs.dao.EmployeeRepository;
+import hu.uni.eku.tzs.dao.ProductRepository;
 import hu.uni.eku.tzs.dao.SaleRepository;
 import hu.uni.eku.tzs.dao.entity.SaleEntity;
 import hu.uni.eku.tzs.model.Customer;
@@ -28,12 +32,15 @@ public class SaleManagerImplTest {
     @Mock
     SaleRepository saleRepository;
 
+    @Mock
+    CustomerRepository customerRepository;
+
     @InjectMocks
     SalesManagerImpl service;
 
-    //TODO: megszerelni
     /*@Test
-    void recordSaleHappyPath() throws SaleAlreadyExistsException, CustomerNotFoundException, ProductNotFoundException, EmployeeNotFoundException {
+    void recordSaleHappyPath() throws SaleAlreadyExistsException, CustomerNotFoundException,
+            ProductNotFoundException, EmployeeNotFoundException {
         //given
         Sale testSale = TestDataProvider.getTestSale1();
         SaleEntity testSaleEntity=TestDataProvider.getTestSaleEntity1();
@@ -106,17 +113,17 @@ public class SaleManagerImplTest {
         public static Customer testCustomer=new Customer(1,
                 "John","J","Doe");
 
-        public static Employee testEmployee=new Employee(1,
-                "Jane","A","Doe");
-
-        public static Product testProd=new Product(1,
-                "Test Product",1234);
-
         public static Customer testCustomer2=new Customer(2,
                 "Jack","A","Smith");
 
+        public static Employee testEmployee=new Employee(1,
+                "Jane","A","Doe");
+
         public static Employee testEmployee2=new Employee(2,
                 "Mary","A","Brown");
+
+        public static Product testProd=new Product(1,
+                "Test Product",1234);
 
         public static Product testProd2=new Product(2,
                 "Test Product 2",1000);

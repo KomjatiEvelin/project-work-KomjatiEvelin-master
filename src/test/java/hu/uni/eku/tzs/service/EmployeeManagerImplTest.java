@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collection;
@@ -96,13 +97,13 @@ class EmployeeManagerImplTest {
 //            .containsExactlyInAnyOrderElementsOf(expectedEmployees);
     }
 
-    //TODO: there is some problem here
-   /* @Test
+
+   /*@Test
     void modifyEmployeeHappyPath() throws EmployeeNotFoundException {
         // given
         Employee testEmployee = TestDataProvider.getJohnDoe();
         EmployeeEntity johnDoeEntity = TestDataProvider.getJohnDoeEntity();
-        when(employeeRepository.save(johnDoeEntity)).thenReturn(johnDoeEntity);
+        Mockito.lenient().when(employeeRepository.save(johnDoeEntity)).thenReturn(johnDoeEntity);
         // when
         Employee actual = service.modify(testEmployee);
         // then
