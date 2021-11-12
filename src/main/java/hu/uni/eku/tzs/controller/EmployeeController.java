@@ -35,7 +35,7 @@ public class EmployeeController {
     private final EmployeeMapper employeeMapper;
 
     @ApiOperation("Read All")
-    @GetMapping(value = {"/", ""})
+    @GetMapping(value = {""})
     public Collection<EmployeeDto> readAllEmployees() {
         return employeeManager.readAll()
             .stream()
@@ -45,7 +45,7 @@ public class EmployeeController {
     }
 
     @ApiOperation("Record")
-    @PostMapping(value = {"", "/"})
+    @PostMapping(value = {""})
     public EmployeeDto create(@Valid @RequestBody EmployeeDto recordRequestDto) {
         Employee employee = employeeMapper.employeeDto2employee(recordRequestDto);
         try {
@@ -57,7 +57,7 @@ public class EmployeeController {
     }
 
     @ApiOperation("Update")
-    @PutMapping(value = {"", "/"})
+    @PutMapping(value = {""})
     public EmployeeDto update(@Valid @RequestBody EmployeeDto updateRequestDto) {
         Employee employee = employeeMapper.employeeDto2employee(updateRequestDto);
         try {
@@ -70,7 +70,7 @@ public class EmployeeController {
     }
 
     @ApiOperation("Delete")
-    @DeleteMapping(value = {"", "/"})
+    @DeleteMapping(value = {""})
     public void delete(@RequestParam int id) {
         try {
             employeeManager.delete(employeeManager.readById(id));

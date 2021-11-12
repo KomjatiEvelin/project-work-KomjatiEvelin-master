@@ -13,14 +13,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
@@ -38,7 +31,7 @@ public class SaleController {
     private final SaleMapper saleMapper;
 
     @ApiOperation("Read All")
-    @GetMapping(value = {"", "/"})
+    @GetMapping(value = {""})
     public Collection<SaleDto> readAllSales() {
         return salesManager.readAll()
                 .stream()
@@ -47,7 +40,7 @@ public class SaleController {
     }
 
     @ApiOperation("Record")
-    @PostMapping(value = {"", "/"})
+    @PostMapping(value = {""})
     public SaleDto create(@Valid @RequestBody SaleDto recordRequestDto) {
         Sale product = saleMapper.saleDto2sale(recordRequestDto);
         try {
@@ -59,8 +52,21 @@ public class SaleController {
         }
     }
 
+    @ApiOperation("Update")
+    @PutMapping(value = {""})
+    public SaleDto update(@Valid @RequestBody SaleDto updateRequestDto) {
+        Sale sale = saleMapper.saleDto2sale(updateRequestDto);
+        try {
+            Sale updatedSale = salesManager.modify(sale);
+            return saleMapper.sale2saleDto(updatedSale);
+        } catch (SaleNotFoundException | EmployeeNotFoundException
+                | CustomerNotFoundException | ProductNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
+
     @ApiOperation("Delete")
-    @DeleteMapping(value = {"", "/"})
+    @DeleteMapping(value = {""})
     public void delete(@RequestParam int id) {
         try {
             salesManager.delete(salesManager.readById(id));

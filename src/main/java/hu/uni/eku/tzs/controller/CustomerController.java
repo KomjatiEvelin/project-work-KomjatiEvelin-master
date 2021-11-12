@@ -36,7 +36,7 @@ public class CustomerController {
     private final CustomerMapper customerMapper;
 
     @ApiOperation("Read All")
-    @GetMapping(value = {"/", ""})
+    @GetMapping(value = {""})
     public Collection<CustomerDto> readAllCustomers() {
         return customerManager.readAll()
                 .stream()
@@ -46,7 +46,7 @@ public class CustomerController {
     }
 
     @ApiOperation("Record")
-    @PostMapping(value = {"", "/"})
+    @PostMapping(value = {""})
     public CustomerDto create(@Valid @RequestBody CustomerDto recordRequestDto) {
         Customer customer = customerMapper.customerDto2customer(recordRequestDto);
         try {
@@ -58,7 +58,7 @@ public class CustomerController {
     }
 
     @ApiOperation("Update")
-    @PutMapping(value = {"", "/"})
+    @PutMapping(value = {""})
     public CustomerDto update(@Valid @RequestBody CustomerDto updateRequestDto) {
         Customer customer = customerMapper.customerDto2customer(updateRequestDto);
         try {
@@ -71,7 +71,7 @@ public class CustomerController {
     }
 
     @ApiOperation("Delete")
-    @DeleteMapping(value = {"", "/"})
+    @DeleteMapping(value = {""})
     public void delete(@RequestParam int id) {
         try {
             customerManager.delete(customerManager.readById(id));

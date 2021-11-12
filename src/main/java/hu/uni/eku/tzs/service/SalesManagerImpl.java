@@ -72,17 +72,7 @@ public class SalesManagerImpl implements SalesManager {
             throw new SaleAlreadyExistsException();
         }
 
-        if (employeeRepository.findById(sale.getSalesPersonId()).isEmpty()) {
-            throw new EmployeeNotFoundException();
-        }
-
-        if (customerRepository.findById(sale.getCustomerId()).isEmpty()) {
-            throw new CustomerNotFoundException();
-        }
-
-        if (productRepository.findById(sale.getProductId()).isEmpty()) {
-            throw new ProductNotFoundException();
-        }
+       checkDependencies(sale);
 
         SaleEntity saleEntity = saleRepository.save(
                 SaleEntity.builder()
@@ -97,16 +87,35 @@ public class SalesManagerImpl implements SalesManager {
     }
 
     @Override
-    public Sale modify(Sale sale) throws SaleNotFoundException {
+    public Sale modify(Sale sale) throws SaleNotFoundException, EmployeeNotFoundException, CustomerNotFoundException,
+            ProductNotFoundException {
         SaleEntity saleEntity = convertSaleModel2Entity(sale);
         if (saleRepository.findById(sale.getSalesId()).isEmpty()) {
             throw new SaleNotFoundException("Cannot find this sale");
         }
+
+        checkDependencies(sale);
+
         return convertSaleEntity2Model(saleRepository.save(saleEntity));
     }
 
     @Override
     public void delete(Sale sale) throws SaleNotFoundException {
         saleRepository.delete(convertSaleModel2Entity(sale));
+    }
+
+    private void checkDependencies(Sale sale) throws EmployeeNotFoundException, CustomerNotFoundException,
+            ProductNotFoundException {
+
+        if (employeeRepository.findById(sale.getSalesPersonId()).isEmpty()) {
+            throw new EmployeeNotFoundException();
+        }
+        if (customerRepository.findById(sale.getCustomerId()).isEmpty()) {
+            throw new CustomerNotFoundException();
+        }
+
+        if (productRepository.findById(sale.getProductId()).isEmpty()) {
+            throw new ProductNotFoundException();
+        }
     }
 }

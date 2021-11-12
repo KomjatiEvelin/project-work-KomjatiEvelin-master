@@ -73,7 +73,7 @@ public class ProductControllerTest {
         assertThatThrownBy(()->controller.create(testProdDto)).isInstanceOf(ResponseStatusException.class);
     }
 
-   /* @Test
+   @Test
     void updateHappyPath() throws ProductNotFoundException {
         //given
         ProductDto requestDto=TestDataProvider.getTestProdDto();
@@ -86,7 +86,7 @@ public class ProductControllerTest {
         ProductDto response = controller.update(requestDto);
         //then
         assertThat(response).usingRecursiveComparison().isEqualTo(expected);
-    }*/
+    }
 
     @Test
     void deleteFromQueryHappyPath() throws ProductNotFoundException {
