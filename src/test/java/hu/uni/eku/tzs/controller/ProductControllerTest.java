@@ -89,6 +89,17 @@ public class ProductControllerTest {
     }
 
     @Test
+    void updateThrowsProductNotFoundException() throws ProductNotFoundException {
+        //given
+        Product testProd= TestDataProvider.getTestProd();
+        ProductDto testProdDto = TestDataProvider.getTestProdDto();
+        when(productMapper.productDto2product(testProdDto)).thenReturn(testProd);
+        doThrow(new ProductNotFoundException()).when(productManager).modify(testProd);
+        // when then
+        assertThatThrownBy(() -> controller.update(testProdDto)).isInstanceOf(ResponseStatusException.class);
+    }
+
+    @Test
     void deleteFromQueryHappyPath() throws ProductNotFoundException {
         //given
         Product testProd=TestDataProvider.getTestProd();

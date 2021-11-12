@@ -67,11 +67,11 @@ public class CustomerControllerTest {
     void createCustomerThrowsCustomerAlreadyExistsException() throws CustomerAlreadyExistsException {
         // given
         Customer testCustomer = TestDataProvider.getJohnDoe();
-        CustomerDto testEmployeeDto = TestDataProvider.getJohnDoeDto();
-        when(customerMapper.customerDto2customer(testEmployeeDto)).thenReturn(testCustomer);
+        CustomerDto testCustomerDto = TestDataProvider.getJohnDoeDto();
+        when(customerMapper.customerDto2customer(testCustomerDto)).thenReturn(testCustomer);
         when(customerManager.record(testCustomer)).thenThrow(new CustomerAlreadyExistsException());
         // when then
-        assertThatThrownBy(() -> controller.create(testEmployeeDto)).isInstanceOf(ResponseStatusException.class);
+        assertThatThrownBy(() -> controller.create(testCustomerDto)).isInstanceOf(ResponseStatusException.class);
     }
 
     @Test
@@ -88,6 +88,17 @@ public class CustomerControllerTest {
         // then
         assertThat(response).usingRecursiveComparison()
                 .isEqualTo(expected);
+    }
+
+    @Test
+    void updateThrowsCustomerNotFoundException() throws CustomerNotFoundException {
+        //given
+        Customer testCustomer=TestDataProvider.getJohnDoe();
+        CustomerDto testCustomerDto = TestDataProvider.getJohnDoeDto();
+        when(customerMapper.customerDto2customer(testCustomerDto)).thenReturn(testCustomer);
+        when(customerManager.modify(testCustomer)).thenThrow(new CustomerNotFoundException());
+        // when then
+        assertThatThrownBy(() -> controller.update(testCustomerDto)).isInstanceOf(ResponseStatusException.class);
     }
 
     @Test

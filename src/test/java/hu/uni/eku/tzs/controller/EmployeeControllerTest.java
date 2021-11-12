@@ -19,7 +19,9 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doThrow;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -88,6 +90,16 @@ class EmployeeControllerTest {
                 .isEqualTo(expected);
     }
 
+    @Test
+    void updateThrowsEmployeeNotFoundException() throws EmployeeNotFoundException {
+        //given
+        Employee testEmployee= TestDataProvider.getJohnDoe();
+        EmployeeDto testEmployeeDto = TestDataProvider.getJohnDoeDto();
+        when(employeeMapper.employeeDto2employee(testEmployeeDto)).thenReturn(testEmployee);
+        when(employeeManager.modify(testEmployee)).thenThrow(new EmployeeNotFoundException());
+        // when then
+        assertThatThrownBy(() -> controller.update(testEmployeeDto)).isInstanceOf(ResponseStatusException.class);
+    }
 
     @Test
     void deleteFromQueryParamHappyPath() throws EmployeeNotFoundException {

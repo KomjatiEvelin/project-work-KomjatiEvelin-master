@@ -4,6 +4,9 @@ import hu.uni.eku.tzs.controller.dto.SaleDto;
 import hu.uni.eku.tzs.controller.dto.SaleMapper;
 import hu.uni.eku.tzs.model.Sale;
 import hu.uni.eku.tzs.service.SalesManager;
+import hu.uni.eku.tzs.service.exceptions.CustomerNotFoundException;
+import hu.uni.eku.tzs.service.exceptions.EmployeeNotFoundException;
+import hu.uni.eku.tzs.service.exceptions.ProductNotFoundException;
 import hu.uni.eku.tzs.service.exceptions.SaleNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,6 +48,34 @@ public class SaleControllerTest {
         //then
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
 
+    }
+
+    @Test
+    void updateHappyPath() throws SaleNotFoundException, CustomerNotFoundException,
+            ProductNotFoundException, EmployeeNotFoundException {
+        //given
+        SaleDto requestDto= TestDataProvider.getTestSaleDto();
+        Sale testSale= TestDataProvider.getTestSale();
+        when(saleMapper.saleDto2sale(requestDto)).thenReturn(testSale);
+        when(salesManager.modify(testSale)).thenReturn(testSale);
+        when(saleMapper.sale2saleDto(testSale)).thenReturn(requestDto);
+        SaleDto expected= TestDataProvider.getTestSaleDto();
+        //when
+        SaleDto response = controller.update(requestDto);
+        //then
+        assertThat(response).usingRecursiveComparison().isEqualTo(expected);
+    }
+
+    @Test
+    void updateThrowsProductNotFoundException() throws ProductNotFoundException, SaleNotFoundException,
+            CustomerNotFoundException, EmployeeNotFoundException {
+        //given
+        Sale testSale = TestDataProvider.getTestSale();
+        SaleDto testSaleDto = TestDataProvider.getTestSaleDto();
+        when(saleMapper.saleDto2sale(testSaleDto)).thenReturn(testSale);
+        when(salesManager.modify(testSale)).thenThrow(new ProductNotFoundException());
+        // when then
+        assertThatThrownBy(() -> controller.update(testSaleDto)).isInstanceOf(ResponseStatusException.class);
     }
 
     @Test
