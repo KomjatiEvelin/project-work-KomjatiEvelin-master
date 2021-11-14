@@ -70,7 +70,8 @@ class EmployeeManagerImplTest {
         // given
         Employee testEmployee = TestDataProvider.getJohnDoe();
         EmployeeEntity testEmployeeEntity = TestDataProvider.getJohnDoeEntity();
-        when(employeeRepository.findById(TestDataProvider.JOHN_DOE_ID)).thenReturn(Optional.ofNullable(testEmployeeEntity));
+        when(employeeRepository.findById(TestDataProvider.JOHN_DOE_ID))
+                .thenReturn(Optional.ofNullable(testEmployeeEntity));
         // when
         assertThatThrownBy(() -> service.record(testEmployee)).isInstanceOf(EmployeeAlreadyExistsException.class);
     }
@@ -92,7 +93,8 @@ class EmployeeManagerImplTest {
         // given
         when(employeeRepository.findById(TestDataProvider.UNKNOWN_ID)).thenReturn(Optional.empty());
         // when then
-        assertThatThrownBy(() -> service.readById(TestDataProvider.UNKNOWN_ID)).isInstanceOf(EmployeeNotFoundException.class);
+        assertThatThrownBy(() -> service.readById(TestDataProvider.UNKNOWN_ID))
+                .isInstanceOf(EmployeeNotFoundException.class);
     }
 
     @Test
@@ -113,23 +115,7 @@ class EmployeeManagerImplTest {
             assertThat(actualEmployees)
                     .usingRecursiveComparison()
                     .isEqualTo(expectedEmployees);
-//            .containsExactlyInAnyOrderElementsOf(expectedEmployees);
     }
-
-
-   /*@Test
-    void modifyEmployeeHappyPath() throws EmployeeNotFoundException {
-        // given
-        Employee testEmployee = TestDataProvider.getJohnDoe();
-        EmployeeEntity johnDoeEntity = TestDataProvider.getJohnDoeEntity();
-        Mockito.lenient().when(employeeRepository.save(johnDoeEntity)).thenReturn(johnDoeEntity);
-        // when
-        Employee actual = service.modify(testEmployee);
-        // then
-        assertThat(actual).usingRecursiveComparison()
-            .isEqualTo(testEmployee);
-
-    }*/
 
 
     private static class TestDataProvider {

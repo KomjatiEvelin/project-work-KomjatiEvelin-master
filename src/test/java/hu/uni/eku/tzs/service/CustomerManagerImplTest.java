@@ -1,6 +1,5 @@
 package hu.uni.eku.tzs.service;
 
-
 import hu.uni.eku.tzs.dao.CustomerRepository;
 import hu.uni.eku.tzs.dao.entity.CustomerEntity;
 import hu.uni.eku.tzs.model.Customer;
@@ -48,7 +47,8 @@ public class CustomerManagerImplTest {
         // given
         Customer testCustomer = TestDataProvider.getJohnDoe();
         CustomerEntity testCustomerEntity = TestDataProvider.getJohnDoeEntity();
-        when(customerRepository.findById(TestDataProvider.JOHN_DOE_ID)).thenReturn(Optional.ofNullable(testCustomerEntity));
+        when(customerRepository.findById(TestDataProvider.JOHN_DOE_ID))
+                .thenReturn(Optional.ofNullable(testCustomerEntity));
         // when
         assertThatThrownBy(() -> service.record(testCustomer)).isInstanceOf(CustomerAlreadyExistsException.class);
     }

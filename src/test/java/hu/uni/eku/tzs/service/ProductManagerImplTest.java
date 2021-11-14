@@ -69,7 +69,8 @@ public class ProductManagerImplTest {
         //given
         when(productRepository.findById(TestDataProvider.UNKNOWN_ID)).thenReturn(Optional.empty());
         //when then
-        assertThatThrownBy(()->service.readById(TestDataProvider.UNKNOWN_ID)).isInstanceOf(ProductNotFoundException.class);
+        assertThatThrownBy(()->service.readById(TestDataProvider.UNKNOWN_ID))
+                .isInstanceOf(ProductNotFoundException.class);
     }
 
     @Test

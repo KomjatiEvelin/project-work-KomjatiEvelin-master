@@ -1,12 +1,14 @@
 package hu.uni.eku.tzs.controller;
 
-import hu.uni.eku.tzs.controller.dto.CustomerDto;
 import hu.uni.eku.tzs.controller.dto.SaleDto;
 import hu.uni.eku.tzs.controller.dto.SaleMapper;
-import hu.uni.eku.tzs.model.Customer;
 import hu.uni.eku.tzs.model.Sale;
 import hu.uni.eku.tzs.service.SalesManager;
-import hu.uni.eku.tzs.service.exceptions.*;
+import hu.uni.eku.tzs.service.exceptions.ProductNotFoundException;
+import hu.uni.eku.tzs.service.exceptions.SaleNotFoundException;
+import hu.uni.eku.tzs.service.exceptions.SaleAlreadyExistsException;
+import hu.uni.eku.tzs.service.exceptions.CustomerNotFoundException;
+import hu.uni.eku.tzs.service.exceptions.EmployeeNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
