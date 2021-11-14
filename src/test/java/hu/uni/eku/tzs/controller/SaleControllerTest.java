@@ -1,13 +1,12 @@
 package hu.uni.eku.tzs.controller;
 
+import hu.uni.eku.tzs.controller.dto.CustomerDto;
 import hu.uni.eku.tzs.controller.dto.SaleDto;
 import hu.uni.eku.tzs.controller.dto.SaleMapper;
+import hu.uni.eku.tzs.model.Customer;
 import hu.uni.eku.tzs.model.Sale;
 import hu.uni.eku.tzs.service.SalesManager;
-import hu.uni.eku.tzs.service.exceptions.CustomerNotFoundException;
-import hu.uni.eku.tzs.service.exceptions.EmployeeNotFoundException;
-import hu.uni.eku.tzs.service.exceptions.ProductNotFoundException;
-import hu.uni.eku.tzs.service.exceptions.SaleNotFoundException;
+import hu.uni.eku.tzs.service.exceptions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -48,6 +47,33 @@ public class SaleControllerTest {
         //then
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
 
+    }
+
+    @Test
+    void createSaleHappyPath() throws SaleAlreadyExistsException, CustomerNotFoundException,
+            ProductNotFoundException, EmployeeNotFoundException {
+        // given
+        Sale testSale = TestDataProvider.getTestSale();
+        SaleDto testSaleDto = TestDataProvider.getTestSaleDto();
+        when(saleMapper.saleDto2sale(testSaleDto)).thenReturn(testSale);
+        when(salesManager.record(testSale)).thenReturn(testSale);
+        when(saleMapper.sale2saleDto(testSale)).thenReturn(testSaleDto);
+        // when
+        SaleDto actual = controller.create(testSaleDto);
+        // then
+        assertThat(actual).usingRecursiveComparison().isEqualTo(testSaleDto);
+    }
+
+    @Test
+    void createSaleThrowsSaleAlreadyExistsException() throws SaleAlreadyExistsException, CustomerNotFoundException,
+            ProductNotFoundException, EmployeeNotFoundException {
+        // given
+        Sale testSale = TestDataProvider.getTestSale();
+        SaleDto testSaleDto = TestDataProvider.getTestSaleDto();
+        when(saleMapper.saleDto2sale(testSaleDto)).thenReturn(testSale);
+        when(salesManager.record(testSale)).thenThrow(new SaleAlreadyExistsException());
+        // when then
+        assertThatThrownBy(() -> controller.create(testSaleDto)).isInstanceOf(ResponseStatusException.class);
     }
 
     @Test
