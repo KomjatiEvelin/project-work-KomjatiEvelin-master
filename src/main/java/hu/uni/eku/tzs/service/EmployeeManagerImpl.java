@@ -56,7 +56,7 @@ public class EmployeeManagerImpl implements EmployeeManager {
     @Override
     public Employee record(Employee employee) throws EmployeeAlreadyExistsException {
         if (employeeRepository.findById(employee.getId()).isPresent()) {
-            throw new EmployeeAlreadyExistsException();
+            throw new EmployeeAlreadyExistsException("An employee already owns this ID");
         }
 
         EmployeeEntity employeeEntity = employeeRepository.save(
@@ -74,7 +74,7 @@ public class EmployeeManagerImpl implements EmployeeManager {
     public Employee modify(Employee employee) throws EmployeeNotFoundException {
         EmployeeEntity entity = convertEmployeeModel2Entity(employee);
         if (employeeRepository.findById(employee.getId()).isEmpty()) {
-            throw new EmployeeNotFoundException();
+            throw new EmployeeNotFoundException(String.format("Does not exist employee with ID %s", employee.getId()));
         }
         return convertEmployeeEntity2Model(employeeRepository.save(entity));
 

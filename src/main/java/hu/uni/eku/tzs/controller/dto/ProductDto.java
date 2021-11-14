@@ -19,6 +19,6 @@ public class ProductDto {
     @NotBlank(message = "name cannot be empty")
     private String name;
 
-    @NotNull
+    @NotNull(message = "price can not be empty")
     private double price;
 }

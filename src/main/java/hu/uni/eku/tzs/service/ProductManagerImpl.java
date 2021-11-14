@@ -51,8 +51,11 @@ public class ProductManagerImpl implements ProductManager {
 
     @Override
     public Product record(Product product) throws ProductAlreadyExistsException {
+
+        checkNumberArguments(product);
+
         if (productRepository.findById(product.getId()).isPresent()) {
-            throw new ProductAlreadyExistsException();
+            throw new ProductAlreadyExistsException("A product already owns this ID");
         }
 
         ProductEntity productEntity = productRepository.save(
@@ -67,6 +70,9 @@ public class ProductManagerImpl implements ProductManager {
 
     @Override
     public Product modify(Product product) throws ProductNotFoundException {
+
+        checkNumberArguments(product);
+
         ProductEntity productEntity = convertProductModel2Entity(product);
         if (productRepository.findById(product.getId()).isEmpty()) {
             throw new ProductNotFoundException("Cannot find this product");
@@ -78,5 +84,16 @@ public class ProductManagerImpl implements ProductManager {
     @Override
     public void delete(Product product) {
         productRepository.delete(convertProductModel2Entity(product));
+    }
+
+    private void checkNumberArguments(Product product) {
+
+        if (product.getId() < 1) {
+            throw new IllegalArgumentException("Id can not be smaller than 1");
+        }
+
+        if (product.getPrice() < 0) {
+            throw new IllegalArgumentException("Price of product can not be negative");
+        }
     }
 }

@@ -68,8 +68,11 @@ public class SalesManagerImpl implements SalesManager {
     @Override
     public Sale record(Sale sale) throws SaleAlreadyExistsException, EmployeeNotFoundException,
             CustomerNotFoundException, ProductNotFoundException {
+
+        checkNumberArguments(sale);
+
         if (saleRepository.findById(sale.getSalesId()).isPresent()) {
-            throw new SaleAlreadyExistsException();
+            throw new SaleAlreadyExistsException("A sale already exists with this ID");
         }
 
         checkDependencies(sale);
@@ -89,7 +92,11 @@ public class SalesManagerImpl implements SalesManager {
     @Override
     public Sale modify(Sale sale) throws SaleNotFoundException, EmployeeNotFoundException, CustomerNotFoundException,
             ProductNotFoundException {
+
+        checkNumberArguments(sale);
+
         SaleEntity saleEntity = convertSaleModel2Entity(sale);
+
         if (saleRepository.findById(sale.getSalesId()).isEmpty()) {
             throw new SaleNotFoundException("Cannot find this sale");
         }
@@ -108,14 +115,26 @@ public class SalesManagerImpl implements SalesManager {
             ProductNotFoundException {
 
         if (employeeRepository.findById(sale.getSalesPersonId()).isEmpty()) {
-            throw new EmployeeNotFoundException();
+            throw new EmployeeNotFoundException(String.format("Cannot find employee with ID %s",
+                    sale.getSalesPersonId()));
         }
         if (customerRepository.findById(sale.getCustomerId()).isEmpty()) {
-            throw new CustomerNotFoundException();
+            throw new CustomerNotFoundException(String.format("Cannot find customer with ID %s", sale.getCustomerId()));
         }
 
         if (productRepository.findById(sale.getProductId()).isEmpty()) {
-            throw new ProductNotFoundException();
+            throw new ProductNotFoundException(String.format("Cannot find product with ID %s", sale.getProductId()));
+        }
+    }
+
+    private void checkNumberArguments(Sale sale) {
+
+        if (sale.getSalesId() < 1) {
+            throw new IllegalArgumentException("Id can not be smaller than 1");
+        }
+
+        if (sale.getQuantity() < 1) {
+            throw new IllegalArgumentException("Quantity can not be less than 1");
         }
     }
 }

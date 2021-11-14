@@ -55,7 +55,7 @@ public class CustomerManagerImpl implements CustomerManager {
     @Override
     public Customer record(Customer customer) throws CustomerAlreadyExistsException {
         if (customerRepository.findById(customer.getId()).isPresent()) {
-            throw new CustomerAlreadyExistsException();
+            throw new CustomerAlreadyExistsException("A customer already owns this id");
         }
 
         CustomerEntity customerEntity = customerRepository.save(
@@ -73,7 +73,7 @@ public class CustomerManagerImpl implements CustomerManager {
     public Customer modify(Customer customer) throws CustomerNotFoundException {
         CustomerEntity entity = convertCustomerModel2Entity(customer);
         if (customerRepository.findById(customer.getId()).isEmpty()) {
-            throw new CustomerNotFoundException();
+            throw new CustomerNotFoundException(String.format("Can not found customer with ID %s", customer.getId()));
         }
         return convertCustomerEntity2Model(customerRepository.save(entity));
 

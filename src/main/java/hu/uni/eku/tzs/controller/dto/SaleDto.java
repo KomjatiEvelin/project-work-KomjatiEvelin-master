@@ -13,18 +13,18 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class SaleDto {
 
-    @NotNull
+    @NotNull(message = "id can not be empty")
     private int salesId;
 
-    @NotNull
+    @NotNull(message = "employee id required")
     private int salesPersonId;
 
-    @NotNull
+    @NotNull(message = "customer id required")
     private int customerId;
 
-    @NotNull
+    @NotNull(message = "product id required")
     private int productId;
 
-    @NotNull
+    @NotNull(message = "quantity can not be null")
     private int quantity;
 }
