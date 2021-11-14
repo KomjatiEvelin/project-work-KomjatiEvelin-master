@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collection;
@@ -57,6 +56,14 @@ class EmployeeManagerImplTest {
         assertThat(actual).usingRecursiveComparison().isEqualTo(testEmployee);
     }
 
+    @Test
+    void modifyEmployeeThrowsEmployeeNotFoundException() {
+        //given
+        Employee testEmployee= TestDataProvider.getJohnDoe();
+        when(employeeRepository.findById(testEmployee.getId())).thenReturn(Optional.empty());
+        // when then
+        assertThatThrownBy(() -> service.modify(testEmployee)).isInstanceOf(EmployeeNotFoundException.class);
+    }
 
     @Test
     void recordEmployeeAlreadyExistsException() {

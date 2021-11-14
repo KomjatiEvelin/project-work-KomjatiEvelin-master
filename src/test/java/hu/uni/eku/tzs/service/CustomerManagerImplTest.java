@@ -67,6 +67,15 @@ public class CustomerManagerImplTest {
     }
 
     @Test
+    void modifyCustomerThrowsCustomerNotFoundException() {
+        //given
+        Customer testCustomer = TestDataProvider.getJohnDoe();
+        when(customerRepository.findById(testCustomer.getId())).thenReturn(Optional.empty());
+        // when then
+        assertThatThrownBy(() -> service.modify(testCustomer)).isInstanceOf(CustomerNotFoundException.class);
+    }
+
+    @Test
     void readByIdHappyPath() throws CustomerNotFoundException {
         // given
         when(customerRepository.findById(TestDataProvider.JOHN_DOE_ID))
@@ -104,7 +113,6 @@ public class CustomerManagerImplTest {
         assertThat(actualEmployees)
                 .usingRecursiveComparison()
                 .isEqualTo(expectedCustomers);
-//            .containsExactlyInAnyOrderElementsOf(expectedCustomers);
     }
 
 
