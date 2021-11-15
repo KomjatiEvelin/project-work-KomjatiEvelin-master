@@ -18,12 +18,12 @@ public class CustomerEntity {
     @Id
     private int id;
 
-    @Column(name = "first_name")
+    @Column(name = "FirstName")
     private String firstName;
 
-    @Column(name = "middle_initial")
+    @Column(name = "MiddleInitial")
     private String middleInitial;
 
-    @Column(name = "last_name")
+    @Column(name = "LastName")
     private String lastName;
 }
