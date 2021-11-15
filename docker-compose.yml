@@ -8,13 +8,11 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: SalesDB
     volumes:
-      - './src/main/resources/sql/create_database.sql:/docker-entrypoint-initdb.d/create_database.sql'
+      - './src/main/resources/SalesDB.sql:/docker-entrypoint-initdb.d/SalesDB.sql'
     ports:
       - '127.0.0.1:3306:3306'
   backend:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     ports:
       - '127.0.0.1:8080:8080'
     environment:
@@ -22,6 +20,6 @@ services:
       DB_PORT: 3306
       DB_NAME: SalesDB
       DB_USER: root
-      DB_PASSWORD: secret
+      DB_PASSWORD: password
     depends_on:
       - db

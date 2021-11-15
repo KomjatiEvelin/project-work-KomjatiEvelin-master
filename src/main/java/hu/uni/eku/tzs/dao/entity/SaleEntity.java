@@ -19,15 +19,15 @@ public class SaleEntity {
     @Id
     private int salesId;
 
-    @Column(name = "salesperson_id")
+    @Column(name = "SalesPersonID")
     private int salesPersonId;
 
-    @Column(name = "customer_id")
+    @Column(name = "CustomerID")
     private int customerId;
 
-    @Column(name = "product_id")
+    @Column(name = "ProductID")
     private int productId;
 
-    @Column(name = "quantity")
+    @Column(name = "Quantity")
     private int quantity;
 }

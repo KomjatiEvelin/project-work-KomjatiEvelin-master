@@ -19,9 +19,9 @@ public class ProductEntity {
     @Id
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "Name")
     private String name;
 
-    @Column(name = "price")
+    @Column(name = "Price")
     private double price;
 }
