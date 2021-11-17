@@ -54,9 +54,10 @@ public class CustomerControllerTest {
         // given
         when(customerManager.readById(TestDataProvider.getJohnDoe().getId()))
                 .thenReturn(TestDataProvider.getJohnDoe());
-        Customer expected = TestDataProvider.getJohnDoe();
+        CustomerDto expected = TestDataProvider.getJohnDoeDto();
+        when(customerMapper.customer2customerDto(any())).thenReturn(TestDataProvider.getJohnDoeDto());
         // when
-        Customer actual = customerManager.readById(TestDataProvider.getJohnDoe().getId());
+        CustomerDto actual = controller.readById(TestDataProvider.getJohnDoe().getId());
         // then
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
     }

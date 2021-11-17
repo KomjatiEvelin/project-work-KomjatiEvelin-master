@@ -56,9 +56,10 @@ public class SaleControllerTest {
         // given
         when(salesManager.readById(TestDataProvider.SALE_ID))
                 .thenReturn(TestDataProvider.getTestSale());
-        Sale expected = TestDataProvider.getTestSale();
+        SaleDto expected = TestDataProvider.getTestSaleDto();
+        when(saleMapper.sale2saleDto(any())).thenReturn(TestDataProvider.getTestSaleDto());
         // when
-        Sale actual = salesManager.readById(TestDataProvider.getTestSale().getSalesId());
+        SaleDto actual = controller.readById(TestDataProvider.getTestSale().getSalesId());
         // then
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
     }

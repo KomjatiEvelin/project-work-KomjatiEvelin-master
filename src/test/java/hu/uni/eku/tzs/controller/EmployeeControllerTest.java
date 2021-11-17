@@ -54,9 +54,10 @@ class EmployeeControllerTest {
         // given
         when(employeeManager.readById(TestDataProvider.ID))
                 .thenReturn(TestDataProvider.getJohnDoe());
-        Employee expected = TestDataProvider.getJohnDoe();
+        EmployeeDto expected = TestDataProvider.getJohnDoeDto();
+        when(employeeMapper.employee2employeeDto(any())).thenReturn(TestDataProvider.getJohnDoeDto());
         // when
-       Employee actual = employeeManager.readById(TestDataProvider.ID);
+        EmployeeDto actual = controller.readById(TestDataProvider.ID);
         // then
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
     }

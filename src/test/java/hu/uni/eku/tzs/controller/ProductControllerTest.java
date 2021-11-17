@@ -53,9 +53,10 @@ public class ProductControllerTest {
         // given
         when(productManager.readById(TestDataProvider.ID))
                 .thenReturn(TestDataProvider.getTestProd());
-        Product expected = TestDataProvider.getTestProd();
+        ProductDto expected = TestDataProvider.getTestProdDto();
+        when(productMapper.product2productDto(any())).thenReturn(TestDataProvider.getTestProdDto());
         // when
-        Product actual = productManager.readById(TestDataProvider.ID);
+        ProductDto actual = controller.readById(TestDataProvider.ID);
         // then
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
     }
