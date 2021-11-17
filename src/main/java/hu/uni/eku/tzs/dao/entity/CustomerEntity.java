@@ -8,14 +8,17 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "customers")
+@Entity
+@Table(name = "Customers")
 public class CustomerEntity {
     @Id
+    @Column(name = "CustomerID")
     private int id;
 
     @Column(name = "FirstName")

@@ -45,6 +45,12 @@ public class CustomerController {
 
     }
 
+    @ApiOperation("ReadByID")
+    @GetMapping(value = {""})
+    public CustomerDto readById(@RequestParam int id) throws CustomerNotFoundException {
+        return customerMapper.customer2customerDto(customerManager.readById(id));
+    }
+
     @ApiOperation("Record")
     @PostMapping(value = {""})
     public CustomerDto create(@Valid @RequestBody CustomerDto recordRequestDto) {

@@ -44,6 +44,12 @@ public class EmployeeController {
 
     }
 
+    @ApiOperation("ReadByID")
+    @GetMapping(value = {""})
+    public EmployeeDto readById(@RequestParam int id) throws EmployeeNotFoundException {
+        return employeeMapper.employee2employeeDto(employeeManager.readById(id));
+    }
+
     @ApiOperation("Record")
     @PostMapping(value = {""})
     public EmployeeDto create(@Valid @RequestBody EmployeeDto recordRequestDto) {

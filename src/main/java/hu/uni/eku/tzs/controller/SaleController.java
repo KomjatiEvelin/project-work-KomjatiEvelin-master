@@ -47,6 +47,12 @@ public class SaleController {
                 .collect(Collectors.toList());
     }
 
+    @ApiOperation("ReadByID")
+    @GetMapping(value = {""})
+    public SaleDto readById(@RequestParam int id) throws SaleNotFoundException {
+        return saleMapper.sale2saleDto(salesManager.readById(id));
+    }
+
     @ApiOperation("Record")
     @PostMapping(value = {""})
     public SaleDto create(@Valid @RequestBody SaleDto recordRequestDto) {

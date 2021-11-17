@@ -44,6 +44,12 @@ public class ProductController {
                 .collect(Collectors.toList());
     }
 
+    @ApiOperation("ReadByID")
+    @GetMapping(value = {""})
+    public ProductDto readById(@RequestParam int id) throws ProductNotFoundException {
+        return productMapper.product2productDto(productManager.readById(id));
+    }
+
     @ApiOperation("Record")
     @PostMapping(value = {""})
     public ProductDto create(@Valid @RequestBody ProductDto recordRequestDto) {
