@@ -93,9 +93,4 @@ public class SaleController {
         }
     }
 
-    @ApiOperation("Delete")
-    @DeleteMapping(value = {"/{id}"})
-    public void deleteBasedOnPath(@PathVariable int id) {
-        this.delete(id);
-    }
 }

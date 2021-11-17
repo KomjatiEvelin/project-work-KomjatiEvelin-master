@@ -89,10 +89,4 @@ public class EmployeeController {
         }
     }
 
-    @ApiOperation("Delete")
-    @DeleteMapping(value = {"/{id}"})
-    public void deleteBasedOnPath(@PathVariable int id) {
-        this.delete(id);
-    }
-
 }
