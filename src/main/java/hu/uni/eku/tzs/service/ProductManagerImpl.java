@@ -75,18 +75,21 @@ public class ProductManagerImpl implements ProductManager {
 
         ProductEntity productEntity = convertProductModel2Entity(product);
         if (productRepository.findById(product.getId()).isEmpty()) {
-            throw new ProductNotFoundException("Cannot find this product");
+            throw new ProductNotFoundException("Cannot find product");
         }
 
         return convertProductEntity2Model(productRepository.save(productEntity));
     }
 
     @Override
-    public void delete(Product product) {
+    public void delete(Product product) throws ProductNotFoundException {
+        if (productRepository.findById(product.getId()).isEmpty()) {
+            throw new ProductNotFoundException("Cannot find this product");
+        }
         productRepository.delete(convertProductModel2Entity(product));
     }
 
-    private void checkNumberArguments(Product product) {
+    void checkNumberArguments(Product product) {
 
         if (product.getId() < 1) {
             throw new IllegalArgumentException("Id can not be smaller than 1");

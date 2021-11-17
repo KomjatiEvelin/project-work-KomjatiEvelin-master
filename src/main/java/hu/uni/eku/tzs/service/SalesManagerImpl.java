@@ -108,6 +108,9 @@ public class SalesManagerImpl implements SalesManager {
 
     @Override
     public void delete(Sale sale) throws SaleNotFoundException {
+        if (saleRepository.findById(sale.getSalesId()).isEmpty()) {
+            throw new SaleNotFoundException("Cannot find sale with this ID");
+        }
         saleRepository.delete(convertSaleModel2Entity(sale));
     }
 
@@ -127,7 +130,7 @@ public class SalesManagerImpl implements SalesManager {
         }
     }
 
-    private void checkNumberArguments(Sale sale) {
+    void checkNumberArguments(Sale sale) {
 
         if (sale.getSalesId() < 1) {
             throw new IllegalArgumentException("Id can not be smaller than 1");

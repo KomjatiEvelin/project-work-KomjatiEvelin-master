@@ -1,8 +1,11 @@
 package hu.uni.eku.tzs.service;
 
 import hu.uni.eku.tzs.dao.EmployeeRepository;
+import hu.uni.eku.tzs.dao.entity.CustomerEntity;
 import hu.uni.eku.tzs.dao.entity.EmployeeEntity;
+import hu.uni.eku.tzs.model.Customer;
 import hu.uni.eku.tzs.model.Employee;
+import hu.uni.eku.tzs.service.exceptions.CustomerNotFoundException;
 import hu.uni.eku.tzs.service.exceptions.EmployeeAlreadyExistsException;
 import hu.uni.eku.tzs.service.exceptions.EmployeeNotFoundException;
 import org.junit.jupiter.api.Test;
@@ -117,6 +120,24 @@ class EmployeeManagerImplTest {
                     .isEqualTo(expectedEmployees);
     }
 
+    @Test
+    void deleteEmployeeHappyPath() throws EmployeeNotFoundException {
+        //given
+        Employee testEmployee =TestDataProvider.getJohnDoe();
+        EmployeeEntity testEmployeeEntity= TestDataProvider.getJohnDoeEntity();
+        when(employeeRepository.findById(testEmployee.getId())).thenReturn(Optional.of(testEmployeeEntity));
+
+        //when then
+        service.delete(testEmployee);
+    }
+
+    @Test
+    void deleteEmployeeThrowsException() {
+        //given
+        Employee testEmployee = TestDataProvider.getJohnDoe();
+        //when then
+        assertThatThrownBy(() -> service.delete(testEmployee)).isInstanceOf(EmployeeNotFoundException.class);
+    }
 
     private static class TestDataProvider {
 

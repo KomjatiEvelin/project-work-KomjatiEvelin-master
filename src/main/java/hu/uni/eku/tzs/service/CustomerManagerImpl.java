@@ -80,7 +80,10 @@ public class CustomerManagerImpl implements CustomerManager {
     }
 
     @Override
-    public void delete(Customer customer) {
+    public void delete(Customer customer) throws CustomerNotFoundException {
+        if (customerRepository.findById(customer.getId()).isEmpty()) {
+            throw new CustomerNotFoundException("Customer does not exist");
+        }
         customerRepository.delete(convertCustomerModel2Entity(customer));
     }
 }

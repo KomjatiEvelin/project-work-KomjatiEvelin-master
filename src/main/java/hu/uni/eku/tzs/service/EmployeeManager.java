@@ -16,6 +16,6 @@ public interface EmployeeManager {
 
     Employee modify(Employee employee) throws  EmployeeNotFoundException;
 
-    void delete(Employee employee);
+    void delete(Employee employee) throws EmployeeNotFoundException;
 
 }

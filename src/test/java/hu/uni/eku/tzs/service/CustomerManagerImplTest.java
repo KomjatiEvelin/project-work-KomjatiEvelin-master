@@ -115,6 +115,24 @@ public class CustomerManagerImplTest {
                 .isEqualTo(expectedCustomers);
     }
 
+    @Test
+    void deleteCustomerHappyPath() throws CustomerNotFoundException {
+        //given
+        Customer testCustomer = TestDataProvider.getJohnDoe();
+        CustomerEntity testCustomerEntity= TestDataProvider.getJohnDoeEntity();
+        when(customerRepository.findById(testCustomer.getId())).thenReturn(Optional.of(testCustomerEntity));
+
+        //when then
+        service.delete(testCustomer);
+    }
+
+    @Test
+    void deleteCustomerThrowsException() {
+        //given
+        Customer testCustomer = TestDataProvider.getJohnDoe();
+        //when then
+        assertThatThrownBy(() -> service.delete(testCustomer)).isInstanceOf(CustomerNotFoundException.class);
+    }
 
     private static class TestDataProvider {
 

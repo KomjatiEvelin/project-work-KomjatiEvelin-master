@@ -141,6 +141,14 @@ public class SaleManagerImplTest {
     }
 
     @Test
+    void modifySaleThrowsSaleNotFoundException() {
+        //given
+        Sale testSale = TestDataProvider.getTestSale1();
+        // when then
+        assertThatThrownBy(() -> service.modify(testSale)).isInstanceOf(SaleNotFoundException.class);
+    }
+
+    @Test
     void readByIdHappyPath() throws SaleNotFoundException {
         //given
         when(saleRepository.findById(TestDataProvider.TEST_SALE1_ID))
@@ -178,6 +186,53 @@ public class SaleManagerImplTest {
         assertThat(actualSales)
                 .usingRecursiveComparison()
                 .isEqualTo(expectedSales);
+    }
+
+    @Test
+    void deleteSaleHappyPath() throws SaleNotFoundException {
+        //given
+        Sale testSale = TestDataProvider.getTestSale1();
+        SaleEntity testSaleEntity=TestDataProvider.getTestSaleEntity1();
+        when(saleRepository.findById(testSale.getSalesId())).thenReturn(Optional.of(testSaleEntity));
+
+        //when then
+        service.delete(testSale);
+    }
+
+    @Test
+    void deleteSaleThrowsException() {
+        //given
+        Sale testSale = TestDataProvider.getTestSale1();
+        //when then
+        assertThatThrownBy(() -> service.delete(testSale)).isInstanceOf(SaleNotFoundException.class);
+    }
+
+    @Test
+    void checkNumArgsHappyPath() {
+        //given
+        Sale sale = TestDataProvider.getTestSale1();
+        //when then
+        service.checkNumberArguments(sale);
+    }
+
+    @Test
+    void  checkNumArgsFailOnId(){
+        //given
+        int id=0;
+        Sale badIdSale=new Sale(id,1,1,1,1);
+        //when then
+        assertThatThrownBy(() -> service.checkNumberArguments(badIdSale)).isInstanceOf(IllegalArgumentException.class)
+               .hasMessage("Id can not be smaller than 1");
+    }
+
+    @Test
+    void  checkNumArgsFailOnQuantity(){
+        //given
+        int quantity=0;
+        Sale badQuantitySale=new Sale(1,1,1,1,quantity);
+        //when then
+        assertThatThrownBy(() -> service.checkNumberArguments(badQuantitySale)).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Quantity can not be less than 1");
     }
 
     private static class TestDataProvider{

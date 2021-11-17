@@ -16,5 +16,5 @@ public interface ProductManager {
 
     Product modify(Product product) throws  ProductNotFoundException;
 
-    void delete(Product product);
+    void delete(Product product) throws  ProductNotFoundException;
 }

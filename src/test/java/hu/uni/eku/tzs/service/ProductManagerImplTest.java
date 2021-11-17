@@ -115,6 +115,53 @@ public class ProductManagerImplTest {
         assertThatThrownBy(() -> service.modify(testProd)).isInstanceOf(ProductNotFoundException.class);
     }
 
+    @Test
+    void deleteProductHappyPath() throws ProductNotFoundException {
+        //given
+        Product testProd = TestDataProvider.getTestProd1();
+        ProductEntity testProdEntity= TestDataProvider.getTestProd1Entity();
+        when(productRepository.findById(testProd.getId())).thenReturn(Optional.of(testProdEntity));
+
+        //when then
+        service.delete(testProd);
+    }
+
+    @Test
+    void deleteProductThrowsException() {
+        //given
+        Product testProd = TestDataProvider.getTestProd1();
+        //when then
+        assertThatThrownBy(() -> service.delete(testProd)).isInstanceOf(ProductNotFoundException.class);
+    }
+
+    @Test
+    void checkNumArgsHappyPath() {
+        //given
+        Product testProd = TestDataProvider.getTestProd1();
+        //when then
+        service.checkNumberArguments(testProd);
+    }
+
+    @Test
+    void  checkNumArgsFailOnId(){
+        //given
+        int id=0;
+        Product badIdProd=new Product(id,"test name",1000);
+        //when then
+        assertThatThrownBy(() -> service.checkNumberArguments(badIdProd)).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Id can not be smaller than 1");
+    }
+
+    @Test
+    void  checkNumArgsFailOnPrice(){
+        //given
+        int price=-120;
+        Product badPriceProd=new Product(1,"test name",price);
+        //when then
+        assertThatThrownBy(() -> service.checkNumberArguments(badPriceProd)).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Price of product can not be negative");
+    }
+
     private static class TestDataProvider {
 
         public static final int PROD1_ID=1;

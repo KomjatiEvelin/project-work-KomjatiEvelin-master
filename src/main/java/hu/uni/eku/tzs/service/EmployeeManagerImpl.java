@@ -81,7 +81,10 @@ public class EmployeeManagerImpl implements EmployeeManager {
     }
 
     @Override
-    public void delete(Employee employee) {
+    public void delete(Employee employee) throws EmployeeNotFoundException {
+        if (employeeRepository.findById(employee.getId()).isEmpty()) {
+            throw new EmployeeNotFoundException("Employee does not exist");
+        }
         employeeRepository.delete(convertEmployeeModel2Entity(employee));
     }
 }
