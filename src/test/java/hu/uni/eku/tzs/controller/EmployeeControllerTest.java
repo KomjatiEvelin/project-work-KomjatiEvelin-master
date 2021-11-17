@@ -50,6 +50,27 @@ class EmployeeControllerTest {
     }
 
     @Test
+    void readByIdHappyPath() throws EmployeeNotFoundException {
+        // given
+        when(employeeManager.readById(TestDataProvider.ID))
+                .thenReturn(TestDataProvider.getJohnDoe());
+        Employee expected = TestDataProvider.getJohnDoe();
+        // when
+       Employee actual = employeeManager.readById(TestDataProvider.ID);
+        // then
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    }
+
+    @Test
+    void readByIdThrowsEmployeeNotFoundException() throws EmployeeNotFoundException {
+        //given
+        Employee testEmployee= TestDataProvider.getJohnDoe();
+        when(employeeManager.readById(testEmployee.getId())).thenThrow(new EmployeeNotFoundException());
+        // when then
+        assertThatThrownBy(() -> controller.readById(testEmployee.getId())).isInstanceOf(ResponseStatusException.class);
+    }
+
+    @Test
     void createEmployeeHappyPath() throws EmployeeAlreadyExistsException {
         // given
         Employee testEmployee = TestDataProvider.getJohnDoe();

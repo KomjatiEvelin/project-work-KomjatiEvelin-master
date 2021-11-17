@@ -45,9 +45,13 @@ public class ProductController {
     }
 
     @ApiOperation("ReadByID")
-    @GetMapping(value = {""})
-    public ProductDto readById(@RequestParam int id) throws ProductNotFoundException {
-        return productMapper.product2productDto(productManager.readById(id));
+    @GetMapping(value = {"/{id}"})
+    public ProductDto readById(@PathVariable int id) throws ProductNotFoundException {
+        try {
+            return productMapper.product2productDto(productManager.readById(id));
+        } catch (ProductNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
     }
 
     @ApiOperation("Record")

@@ -52,6 +52,27 @@ public class SaleControllerTest {
     }
 
     @Test
+    void readByIdHappyPath() throws SaleNotFoundException {
+        // given
+        when(salesManager.readById(TestDataProvider.SALE_ID))
+                .thenReturn(TestDataProvider.getTestSale());
+        Sale expected = TestDataProvider.getTestSale();
+        // when
+        Sale actual = salesManager.readById(TestDataProvider.getTestSale().getSalesId());
+        // then
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    }
+
+    @Test
+    void readByIdThrowsSaleNotFoundException() throws SaleNotFoundException {
+        //given
+        Sale testSale= TestDataProvider.getTestSale();
+        when(salesManager.readById(testSale.getSalesId())).thenThrow(new SaleNotFoundException());
+        // when then
+        assertThatThrownBy(() -> controller.readById(testSale.getSalesId())).isInstanceOf(ResponseStatusException.class);
+    }
+
+    @Test
     void createSaleHappyPath() throws SaleAlreadyExistsException, CustomerNotFoundException,
             ProductNotFoundException, EmployeeNotFoundException {
         // given

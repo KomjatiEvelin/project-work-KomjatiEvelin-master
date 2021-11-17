@@ -49,6 +49,27 @@ public class ProductControllerTest {
     }
 
     @Test
+    void readByIdHappyPath() throws ProductNotFoundException {
+        // given
+        when(productManager.readById(TestDataProvider.ID))
+                .thenReturn(TestDataProvider.getTestProd());
+        Product expected = TestDataProvider.getTestProd();
+        // when
+        Product actual = productManager.readById(TestDataProvider.ID);
+        // then
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    }
+
+    @Test
+    void readByIdThrowsProductNotFoundException() throws ProductNotFoundException {
+        //given
+        Product testProduct= TestDataProvider.getTestProd();
+        when(productManager.readById(testProduct.getId())).thenThrow(new ProductNotFoundException());
+        // when then
+        assertThatThrownBy(() -> controller.readById(testProduct.getId())).isInstanceOf(ResponseStatusException.class);
+    }
+
+    @Test
     void createProductHappyPath() throws ProductAlreadyExistsException {
         //given
         Product testProd=TestDataProvider.getTestProd();

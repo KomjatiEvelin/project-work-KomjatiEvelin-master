@@ -50,6 +50,27 @@ public class CustomerControllerTest {
     }
 
     @Test
+    void readByIdHappyPath() throws CustomerNotFoundException {
+        // given
+        when(customerManager.readById(TestDataProvider.getJohnDoe().getId()))
+                .thenReturn(TestDataProvider.getJohnDoe());
+        Customer expected = TestDataProvider.getJohnDoe();
+        // when
+        Customer actual = customerManager.readById(TestDataProvider.getJohnDoe().getId());
+        // then
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    }
+
+    @Test
+    void readByIdThrowsCustomerNotFoundException() throws CustomerNotFoundException {
+        //given
+        Customer testCustomer=TestDataProvider.getJohnDoe();
+        when(customerManager.readById(testCustomer.getId())).thenThrow(new CustomerNotFoundException());
+        // when then
+        assertThatThrownBy(() -> controller.readById(testCustomer.getId())).isInstanceOf(ResponseStatusException.class);
+    }
+
+    @Test
     void createCustomerHappyPath() throws CustomerAlreadyExistsException {
         // given
         Customer testCustomer = TestDataProvider.getJohnDoe();

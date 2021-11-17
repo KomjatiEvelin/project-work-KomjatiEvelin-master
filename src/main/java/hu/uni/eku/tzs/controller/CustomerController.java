@@ -46,9 +46,13 @@ public class CustomerController {
     }
 
     @ApiOperation("ReadByID")
-    @GetMapping(value = {""})
-    public CustomerDto readById(@RequestParam int id) throws CustomerNotFoundException {
-        return customerMapper.customer2customerDto(customerManager.readById(id));
+    @GetMapping(value = {"/{id}"})
+    public CustomerDto readById(@PathVariable int id) throws CustomerNotFoundException {
+        try {
+            return customerMapper.customer2customerDto(customerManager.readById(id));
+        } catch (CustomerNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
     }
 
     @ApiOperation("Record")

@@ -45,9 +45,13 @@ public class EmployeeController {
     }
 
     @ApiOperation("ReadByID")
-    @GetMapping(value = {""})
-    public EmployeeDto readById(@RequestParam int id) throws EmployeeNotFoundException {
-        return employeeMapper.employee2employeeDto(employeeManager.readById(id));
+    @GetMapping(value = {"/{id}"})
+    public EmployeeDto readById(@PathVariable int id) throws EmployeeNotFoundException {
+        try {
+            return employeeMapper.employee2employeeDto(employeeManager.readById(id));
+        } catch (EmployeeNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
     }
 
     @ApiOperation("Record")

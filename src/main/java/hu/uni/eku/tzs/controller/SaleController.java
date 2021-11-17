@@ -48,9 +48,13 @@ public class SaleController {
     }
 
     @ApiOperation("ReadByID")
-    @GetMapping(value = {""})
-    public SaleDto readById(@RequestParam int id) throws SaleNotFoundException {
-        return saleMapper.sale2saleDto(salesManager.readById(id));
+    @GetMapping(value = {"/{id}"})
+    public SaleDto readById(@PathVariable int id) throws SaleNotFoundException {
+        try {
+            return saleMapper.sale2saleDto(salesManager.readById(id));
+        } catch (SaleNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
     }
 
     @ApiOperation("Record")
