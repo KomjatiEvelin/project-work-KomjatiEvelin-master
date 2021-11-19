@@ -8,11 +8,14 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: SalesDB
     volumes:
-      - './src/main/resources/SalesDB.sql:/docker-entrypoint-initdb.d/SalesDB.sql'
+      - './src/main/resources/use_sql_file.sh:/docker-entrypoint-initdb.d/use_sql_file.sh'
+      - './src/main/resources/salesdb.sql.gz:/salesdb.sql.gz'
     ports:
       - '127.0.0.1:3306:3306'
   backend:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - '127.0.0.1:8080:8080'
     environment:
